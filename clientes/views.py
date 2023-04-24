@@ -4,4 +4,5 @@ from django.http import HttpResponse
 
 
 def clientes(request):
-    return HttpResponse('Estou no app clientes para teste, Hello Word')
+    return render(request, "clientes.html")
+           
