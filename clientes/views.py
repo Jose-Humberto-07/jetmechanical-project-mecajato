@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+import re
+
 # Create your views here.
 
 
@@ -17,11 +19,30 @@ def clientes(request):
 
         
 
-        print(carros)
+        cliente = Cliente.objects.filter(cpf=cpf)
 
-        print(placas)
+        if cliente.exists():
+            return render(request, 'clientes.html', {'nome': nome, 'sobrenome': sobrenome, 'email': email, 'carros': zip(carros, placas, anos) })
 
-        print(anos)
+        if not re.fullmatch(re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+'), email):
+            return render(request, 'clientes.html', {'nome': nome, 'sobrenome': sobrenome, 'cpf': cpf, 'carros': zip(carros, placas, anos)})
 
-        return HttpResponse('teste')
+
+
+        cliente = Cliente(
+            nome = nome,
+            sobrenome = sobrenome,
+            email = email,
+            cpf = cpf
+        )
+
+        cliente.save()
+
+        for carro, placa, ano in zip(carros, placas, anos):
+            car = Carro(carro=carro, placa=placa, ano=ano, cliente=cliente)
+            car.save()
+
+        return HttpResponse('Teste')       
+
+        
            
