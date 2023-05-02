@@ -11,4 +11,17 @@ def clientes(request):
         sobrenome = request.POST.get('sobrenome')
         email = request.POST.get('email')
         cpf = request.POST.get('cpf')
+        carros = request.POST.getlist('carro')
+        placas = request.POST.getlist('placa')
+        anos = request.POST.getlist('ano')
+
+        
+
+        print(carros)
+
+        print(placas)
+
+        print(anos)
+
+        return HttpResponse('teste')
            
