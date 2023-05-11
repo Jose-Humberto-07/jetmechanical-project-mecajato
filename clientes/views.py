@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from .models import Cliente, Carro
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 import re
+from django.core import serializers
+import json
 
 # Create your views here.
 
@@ -50,3 +52,13 @@ def clientes(request):
 
         
            
+def att_cliente(request):
+    id_cliente = request.POST.get('id_cliente')
+    cliente = Cliente.objects.filter(id=id_cliente)
+    carros = Carro.objects.filter(cliente=cliente[0])
+    cliente_json = json.loads(serializers.serialize('json', cliente))[0]['fields']
+    cliente_id = json.loads(serializers.serialize('json', cliente))[0]['pk']
+    carros_json = json.loads(serializers.serialize('json', carros))
+    carros_json = [{'fields': i['fields'], 'id': i['pk']} for i in carros_json]
+    data = {'cliente': cliente_json, 'carros': carros_json, 'cliente_id': cliente_id}
+    return JsonResponse(data)
