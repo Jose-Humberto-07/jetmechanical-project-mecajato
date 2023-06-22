@@ -73,7 +73,7 @@ function dados_cliente(){
                             <input class='form-control' type='text' name='ano' value='" + data['carros'][i]['fields']['ano'] + "' >\
                         </div>\
                         <div class='col-md'>\
-                            <input class='btn btn-lg btn-success' type='submit'>\
+                            <input class='btn btn-lg btn-success' type='submit' value='Salvar'>\
                         </div>\
                     </form>\
                     <div class='col-md'>\

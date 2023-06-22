@@ -48,7 +48,7 @@ def clientes(request):
             car = Carro(carro=carro, placa=placa, ano=ano, cliente=cliente)
             car.save()
 
-        return HttpResponse('Teste')       
+        return HttpResponse('Teste')      
 
         
            
