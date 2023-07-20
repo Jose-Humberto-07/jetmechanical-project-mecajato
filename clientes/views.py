@@ -1,9 +1,14 @@
+
 from django.shortcuts import render
 from .models import Cliente, Carro
+from datetime import datetime
 from django.http import HttpResponse, JsonResponse
 import re
 from django.core import serializers
 import json
+from django.views.decorators.csrf import csrf_exempt
+from django.urls import reverse
+from django.shortcuts import redirect
 
 # Create your views here.
 
@@ -62,3 +67,32 @@ def att_cliente(request):
     carros_json = [{'fields': i['fields'], 'id': i['pk']} for i in carros_json]
     data = {'cliente': cliente_json, 'carros': carros_json, 'cliente_id': cliente_id}
     return JsonResponse(data)
+
+@csrf_exempt
+def update_carro(request, id):
+    nome_carro = request.POST.get('carro')
+    placa = request.POST.get('placa')
+    ano = request.POST.get('ano')
+
+
+    carro = Carro.objects.get(id=id)
+    list_carros = Carro.objects.filter(placa=placa).exclude(id=id)
+    if list_carros.exists():
+        return HttpResponse('Placa Já existente, Por favor, tente novamente')
+
+
+    carro.carro = nome_carro
+    carro.placa = placa
+    carro.ano = ano
+    carro.save()    
+    return HttpResponse("Dados alterados com sucesso...")
+
+
+def excluir_carro(request, id):
+    try:
+        carro  = Carro.objects.get(id=id)
+        carro.delete()
+        return redirect(reverse('clientes')+f'?aba=att_cliente&id_cliente={id}')
+    except:
+        #TODO: exibir mensagem de erro
+        return redirect(reverse('clientes')+f'?aba=att_cliente&id_cliente={id}')
