@@ -9,7 +9,8 @@ class FormServico(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields:
-            print(field)
+            print("campo: ",field)
+            
             self.fields[field].widget.attrs.update({'class': 'form-control'})
             self.fields[field].widget.attrs.update({'placeholder': field})
             
@@ -20,5 +21,5 @@ class FormServico(ModelForm):
             choices.append((i.value, categoria.get_titulo_display()))
         
 
-        print(choices)
+        print("categoria_manutencao: ",choices)
         self.fields['categoria_manutencao'].choices = choices
