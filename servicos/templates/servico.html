@@ -9,11 +9,14 @@
 
 {% block 'dashboard' %}
    
-   <br><br>
-   <h1>testessssssssssssssssssss</h1>
+   <br>
+   
    <div class="container">
-    {{servico.titulo}}
+        <a href="{% url 'gerar_os' servico.identificador%}"> Gerar Ordem de Serviço</a>
+        <br>
+        {{servico.titulo}}
    </div>
+  
 
 
 

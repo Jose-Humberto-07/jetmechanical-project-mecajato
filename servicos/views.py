@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_list_or_404
+from django.shortcuts import render, get_list_or_404, get_object_or_404
 from .forms import FormServico
 from django.http import HttpResponse
 
@@ -30,6 +30,12 @@ def listar_servico(request):
 
 
 def servico(request, identificador):
-    servico = get_list_or_404(Servico, identificador=identificador)
+    servico = get_object_or_404(Servico, identificador=identificador)
     print(servico)
+    
     return render(request, 'servico.html', {'servico': servico})
+
+
+def gerar_os(request, identificador):
+    servico = get_object_or_404(Servico, identificador=identificador)
+    return HttpResponse(identificador)
