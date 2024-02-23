@@ -1,7 +1,8 @@
 from django.contrib import admin
-from .models import CategoriaManutencao, Servico
+from .models import CategoriaManutencao, Servico, ServicoAdicional
 
 # Register your models here.
 
 admin.site.register(CategoriaManutencao)
 admin.site.register(Servico)
+admin.site.register(ServicoAdicional)
